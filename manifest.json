@@ -1,8 +1,8 @@
 {
-  "name": "EDEL | Operator Araçları",
+  "name": "EDEL | Üretim Araçları",
   "short_name": "EDEL",
   "description": "Üretim araçları, hesaplamalar ve vardiya takibi",
-  "start_url": "/edeloper/index.html",
+  "start_url": "/edeloper/",
   "display": "standalone",
   "background_color": "#faf3e0",
   "theme_color": "#1976D2",
