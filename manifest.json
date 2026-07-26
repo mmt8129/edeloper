@@ -1,37 +1,24 @@
 {
-  "name": "EDEL | Üretim Araçları",
+  "name": "EDEL Üretim Araçları",
   "short_name": "EDEL",
-  "description": "Üretim araçları, hesaplamalar ve vardiya takibi",
+  "description": "Üretim için pratik araçlar ve hesap makinesi",
   "start_url": "/edeloper/",
   "display": "standalone",
   "background_color": "#faf3e0",
   "theme_color": "#1976D2",
   "orientation": "portrait",
-  "scope": "/edeloper/",
   "icons": [
     {
-      "src": "/edeloper/icon-192.png",
-      "sizes": "192x192",
+      "src": "/edeloper/icon-196.png",
+      "sizes": "196x196",
       "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/edeloper/icon-256.png",
-      "sizes": "256x256",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/edeloper/icon-384.png",
-      "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "/edeloper/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }
