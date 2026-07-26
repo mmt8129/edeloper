@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>EDEL | Operatör Araçları</title>
+    <title>EDEL | Üretim Araçları</title>
     
     <!-- PWA Meta Etiketleri -->
-<meta name="theme-color" content="#1976D2">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="EDEL">
-<meta name="mobile-web-app-capable" content="yes">
-<link rel="manifest" href="/edeloper/manifest.json">
-<link rel="icon" type="image/png" sizes="196x196" href="/edeloper/icon-196.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/edeloper/icon-512.png">
-<link rel="apple-touch-icon" href="/edeloper/icon-196.png">
-
+    <meta name="theme-color" content="#1976D2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="EDEL">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- GitHub Pages için yolları /edeloper/ olarak düzelttim -->
+    <link rel="manifest" href="/edeloper/manifest.json">
+    <link rel="icon" type="image/png" sizes="196x196" href="/edeloper/icon-196.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/edeloper/icon-512.png">
+    <link rel="apple-touch-icon" href="/edeloper/icon-196.png">
     
     <style>
         /* --- ORİJİNAL EDEL STİLLERİ --- */
@@ -39,7 +40,6 @@
             min-height: 100vh;
         }
 
-        /* --- BANNER --- */
         .sticky-banner {
             position: sticky;
             top: 0;
@@ -75,7 +75,6 @@
             opacity: 0.9;
         }
 
-        /* SIRALA BUTONU */
         .sort-btn {
             position: absolute;
             right: 20px;
@@ -97,7 +96,6 @@
             background: rgba(255, 255, 255, 0.3);
         }
 
-        /* --- DASHBOARD --- */
         .dashboard {
             max-width: 500px;
             margin: 2rem auto;
@@ -173,7 +171,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
-        /* --- SIRALAMA MODAL STİLLERİ --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -299,7 +296,6 @@
             border: 1px solid #e0d5bd;
         }
 
-        /* --- HESAP MAKİNESİ & ÖZEL ARAÇ STİLLERİ --- */
         .calc-view {
             display: none;
             width: 100%;
@@ -391,7 +387,6 @@
         .row-group .value-box-container { flex: 1; min-width: 80px; }
         .row-group.single .value-box-container { flex: 0 1 auto; min-width: 150px; justify-content: center; }
 
-        /* --- SEÇİM MODAL --- */
         .modal-overlay-sel {
             position: fixed;
             top: 0;
@@ -633,24 +628,24 @@
 
         let tempSortItems = [];
 
-       function openSortModal() {
-    const buttons = document.querySelectorAll('.app-btn');
-    const listContainer = document.getElementById('sortList');
-    listContainer.innerHTML = '';
-    tempSortItems = [];
-    
-    buttons.forEach(btn => {
-        const name = btn.querySelector('.app-name').innerText;
-        const icon = btn.querySelector('.app-icon').innerText;
-        const desc = btn.querySelector('.app-desc').innerText;
-        const match = btn.getAttribute('onclick').match(/'([^']*)'/);
-        const url = match ? match[1] : '#';
-        tempSortItems.push({ name, icon, desc, url });
-    });
-    
-    renderSortList();
-    document.getElementById('sortModal').classList.add('active');
-}
+        function openSortModal() {
+            const buttons = document.querySelectorAll('.app-btn');
+            const listContainer = document.getElementById('sortList');
+            listContainer.innerHTML = '';
+            tempSortItems = [];
+            
+            buttons.forEach(btn => {
+                const name = btn.querySelector('.app-name').innerText;
+                const icon = btn.querySelector('.app-icon').innerText;
+                const desc = btn.querySelector('.app-desc').innerText;
+                const match = btn.getAttribute('onclick').match(/'([^']*)'/);
+                const url = match ? match[1] : '#';
+                tempSortItems.push({ name, icon, desc, url });
+            });
+            
+            renderSortList();
+            document.getElementById('sortModal').classList.add('active');
+        }
 
         function renderSortList() {
             const listContainer = document.getElementById('sortList');
@@ -679,66 +674,63 @@
         }
 
         function saveSortOrder() {
-    const container = document.getElementById('appButtons');
-    container.innerHTML = '';
-    
-    // Butonları sıralı olarak yeniden oluştur
-    tempSortItems.forEach(item => {
-        const btn = document.createElement('button');
-        btn.className = 'app-btn';
-        btn.setAttribute('onclick', `goTo('${item.url}')`);
-        btn.innerHTML = `
-            <div class="app-icon">${item.icon}</div>
-            <div class="app-text">
-                <div class="app-name">${item.name}</div>
-                <div class="app-desc">${item.desc}</div>
-            </div>
-        `;
-        container.appendChild(btn);
-    });
+            const container = document.getElementById('appButtons');
+            container.innerHTML = '';
+            
+            tempSortItems.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = 'app-btn';
+                btn.setAttribute('onclick', `goTo('${item.url}')`);
+                btn.innerHTML = `
+                    <div class="app-icon">${item.icon}</div>
+                    <div class="app-text">
+                        <div class="app-name">${item.name}</div>
+                        <div class="app-desc">${item.desc}</div>
+                    </div>
+                `;
+                container.appendChild(btn);
+            });
 
-    // Sıralamayı localStorage'a kaydet
-    const orderToSave = tempSortItems.map(item => item.name);
-    localStorage.setItem('edelButtonOrder', JSON.stringify(orderToSave));
-    
-    // Tüm verileri de kaydet (yedek olarak)
-    const fullData = tempSortItems.map(item => ({
-        name: item.name,
-        icon: item.icon,
-        desc: item.desc,
-        url: item.url
-    }));
-    localStorage.setItem('edelFullButtonData', JSON.stringify(fullData));
-    
-    closeSortModal(true);
-}
+            const orderToSave = tempSortItems.map(item => item.name);
+            localStorage.setItem('edelButtonOrder', JSON.stringify(orderToSave));
+            
+            const fullData = tempSortItems.map(item => ({
+                name: item.name,
+                icon: item.icon,
+                desc: item.desc,
+                url: item.url
+            }));
+            localStorage.setItem('edelFullButtonData', JSON.stringify(fullData));
+            
+            closeSortModal(true);
+        }
 
         function closeSortModal(saved) {
             document.getElementById('sortModal').classList.remove('active');
         }
 
         function loadSavedOrder() {
-    const savedData = localStorage.getItem('edelFullButtonData');
-    if (!savedData) return;
-    
-    const data = JSON.parse(savedData);
-    const container = document.getElementById('appButtons');
-    container.innerHTML = '';
-    
-    data.forEach(item => {
-        const btn = document.createElement('button');
-        btn.className = 'app-btn';
-        btn.setAttribute('onclick', `goTo('${item.url}')`);
-        btn.innerHTML = `
-            <div class="app-icon">${item.icon}</div>
-            <div class="app-text">
-                <div class="app-name">${item.name}</div>
-                <div class="app-desc">${item.desc}</div>
-            </div>
-        `;
-        container.appendChild(btn);
-    });
-}
+            const savedData = localStorage.getItem('edelFullButtonData');
+            if (!savedData) return;
+            
+            const data = JSON.parse(savedData);
+            const container = document.getElementById('appButtons');
+            container.innerHTML = '';
+            
+            data.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = 'app-btn';
+                btn.setAttribute('onclick', `goTo('${item.url}')`);
+                btn.innerHTML = `
+                    <div class="app-icon">${item.icon}</div>
+                    <div class="app-text">
+                        <div class="app-name">${item.name}</div>
+                        <div class="app-desc">${item.desc}</div>
+                    </div>
+                `;
+                container.appendChild(btn);
+            });
+        }
         window.addEventListener('DOMContentLoaded', loadSavedOrder);
 
         // ==========================================
@@ -964,7 +956,7 @@
         }
 
         // ==========================================
-        // 5. OFFİNE & SW (Orijinal)
+        // 5. OFFİNE & SW (GÜNCELLENDİ)
         // ==========================================
         function showOfflineMessage() {
             const toast = document.getElementById('offlineToast');
@@ -979,12 +971,20 @@
 
         if (!navigator.onLine) { showOfflineMessage(); }
 
+        // Service Worker kaydı - GÜNCELLENDİ (Her yeni deployda eski cache'i temizler)
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-                .then(reg => { console.log('✅ Service Worker kaydedildi:', reg.scope); })
-                .catch(err => { console.log('❌ Service Worker hatası:', err); });
-            navigator.serviceWorker.ready.then(() => {
-                console.log('🎯 Service Worker aktif ve hazır');
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+            }).then(function() {
+                navigator.serviceWorker.register('/edeloper/sw.js', { scope: '/edeloper/' })
+                    .then(reg => { 
+                        console.log('✅ Service Worker kaydedildi:', reg.scope);
+                        // Yeni sürüm kontrolü için
+                        reg.update();
+                    })
+                    .catch(err => { console.log('❌ Service Worker hatası:', err); });
             });
         }
 
