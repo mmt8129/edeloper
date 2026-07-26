@@ -48,20 +48,16 @@ self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(event.request)
             .then(response => {
-                // Cache'de varsa onu döndür
                 if (response) {
                     return response;
                 }
 
-                // Cache'de yoksa ağdan al ve cache'e ekle
                 return fetch(event.request)
                     .then(response => {
-                        // Geçersiz yanıtları önbelleğe alma
                         if (!response || response.status !== 200 || response.type !== 'basic') {
                             return response;
                         }
 
-                        // Yanıtı klonla ve cache'e ekle
                         const responseToCache = response.clone();
                         caches.open(CACHE_NAME)
                             .then(cache => {
@@ -72,27 +68,12 @@ self.addEventListener('fetch', event => {
                     })
                     .catch(error => {
                         console.log('❌ Fetch hatası:', error);
-                        // Çevrimdışıysan bir hata mesajı döndürebilirsin
                         return new Response('İnternet bağlantısı yok', {
                             status: 503,
                             statusText: 'Service Unavailable'
                         });
                     });
             })
-    );
-});
-
-// Bildirimler ve push olayları (isteğe bağlı)
-self.addEventListener('push', event => {
-    const data = event.data ? event.data.json() : {};
-    const options = {
-        body: data.body || 'Yeni bir bildirim var!',
-        icon: '/edeloper/icon-192.png',
-        badge: '/edeloper/icon-192.png'
-    };
-    
-    event.waitUntil(
-        self.registration.showNotification(data.title || 'EDEL Bildirimi', options)
     );
 });
 
