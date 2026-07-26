@@ -1,12 +1,12 @@
 const CACHE_NAME = 'edel-pwa-v1';
 const urlsToCache = [
-    '/Edelmmt/',
-    '/Edelmmt/index.html',
-    '/Edelmmt/manifest.json',
-    '/Edelmmt/icon-192.png',
-    '/Edelmmt/icon-256.png',
-    '/Edelmmt/icon-384.png',
-    '/Edelmmt/icon-512.png'
+    '/edeloper/',
+    '/edeloper/index.html',
+    '/edeloper/manifest.json',
+    '/edeloper/icon-192.png',
+    '/edeloper/icon-256.png',
+    '/edeloper/icon-384.png',
+    '/edeloper/icon-512.png'
 ];
 
 // Service Worker kurulumu
@@ -87,8 +87,8 @@ self.addEventListener('push', event => {
     const data = event.data ? event.data.json() : {};
     const options = {
         body: data.body || 'Yeni bir bildirim var!',
-        icon: '/Edelmmt/icon-192.png',
-        badge: '/Edelmmt/icon-192.png'
+        icon: '/edeloper/icon-192.png',
+        badge: '/edeloper/icon-192.png'
     };
     
     event.waitUntil(
