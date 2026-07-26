@@ -638,9 +638,28 @@
                 const name = btn.querySelector('.app-name').innerText;
                 const icon = btn.querySelector('.app-icon').innerText;
                 const desc = btn.querySelector('.app-desc').innerText;
-                const match = btn.getAttribute('onclick').match(/'([^']*)'/);
-                const url = match ? match[1] : '#';
-                tempSortItems.push({ name, icon, desc, url });
+                
+                // Butonun onclick özelliğini analiz et
+                const onclickAttr = btn.getAttribute('onclick');
+                let type = 'url';
+                let url = '#';
+                let funcName = '';
+                
+                if (onclickAttr) {
+                    // Eğer goTo('...') varsa
+                    const goToMatch = onclickAttr.match(/goTo\('([^']*)'\)/);
+                    if (goToMatch) {
+                        type = 'url';
+                        url = goToMatch[1];
+                    } 
+                    // Eğer openCalculator() gibi direkt fonksiyon çağrısıysa
+                    else {
+                        type = 'function';
+                        funcName = onclickAttr.replace(/\(\)/g, '').trim(); // openCalculator
+                    }
+                }
+                
+                tempSortItems.push({ name, icon, desc, url, type, funcName });
             });
             
             renderSortList();
@@ -680,7 +699,14 @@
             tempSortItems.forEach(item => {
                 const btn = document.createElement('button');
                 btn.className = 'app-btn';
-                btn.setAttribute('onclick', `goTo('${item.url}')`);
+                
+                // Tipine göre onclick ata
+                if (item.type === 'url') {
+                    btn.setAttribute('onclick', `goTo('${item.url}')`);
+                } else if (item.type === 'function') {
+                    btn.setAttribute('onclick', `${item.funcName}()`);
+                }
+                
                 btn.innerHTML = `
                     <div class="app-icon">${item.icon}</div>
                     <div class="app-text">
@@ -691,14 +717,14 @@
                 container.appendChild(btn);
             });
 
-            const orderToSave = tempSortItems.map(item => item.name);
-            localStorage.setItem('edelButtonOrder', JSON.stringify(orderToSave));
-            
+            // Sıralamayı localStorage'a kaydet (tüm veriyi sakla)
             const fullData = tempSortItems.map(item => ({
                 name: item.name,
                 icon: item.icon,
                 desc: item.desc,
-                url: item.url
+                url: item.url,
+                type: item.type,
+                funcName: item.funcName
             }));
             localStorage.setItem('edelFullButtonData', JSON.stringify(fullData));
             
@@ -720,7 +746,14 @@
             data.forEach(item => {
                 const btn = document.createElement('button');
                 btn.className = 'app-btn';
-                btn.setAttribute('onclick', `goTo('${item.url}')`);
+                
+                // Tipine göre onclick ata
+                if (item.type === 'url') {
+                    btn.setAttribute('onclick', `goTo('${item.url}')`);
+                } else if (item.type === 'function') {
+                    btn.setAttribute('onclick', `${item.funcName}()`);
+                }
+                
                 btn.innerHTML = `
                     <div class="app-icon">${item.icon}</div>
                     <div class="app-text">
