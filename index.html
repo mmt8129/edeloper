@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>EDEL | Üretim Araçları</title>
+    
+    <!-- PWA Meta Etiketleri -->
+    <meta name="theme-color" content="#1976D2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="EDEL">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- GitHub Pages için yolları /edeloper/ olarak düzelttim -->
+    <link rel="manifest" href="/edeloper/manifest.json">
+    <link rel="icon" type="image/png" sizes="196x196" href="/edeloper/icon-196.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/edeloper/icon-512.png">
+    <link rel="apple-touch-icon" href="/edeloper/icon-196.png">
+    
+    <style>
+        /* --- ORİJİNAL EDEL STİLLERİ --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #faf3e0;
+            background-image: repeating-linear-gradient(
+                to bottom,
+                transparent,
+                transparent 29px,
+                #e0d5bd 30px,
+                #e0d5bd 31px
+            );
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, 'Roboto', sans-serif;
+            min-height: 100vh;
+        }
+
+        .sticky-banner {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: #1e3a8a;
+            color: white;
+            padding: 1.2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .banner-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .title-area h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        .title-area p {
+            font-size: 0.85rem;
+            color: #ffffff;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        /* Hamburger menü ikonu */
+        .hamburger {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: white;
+            background: none;
+            border: none;
+            padding: 0.3rem;
+            z-index: 110;
+            user-select: none;
+        }
+
+        /* Hamburger panel */
+        .hamburger-panel {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 260px;
+            height: 100vh;
+            background: rgba(255, 255, 245, 0.97);
+            backdrop-filter: blur(6px);
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+            transition: left 0.25s ease;
+            padding: 2rem 1.2rem 1.2rem 1.2rem;
+            overflow-y: auto;
+            border-right: 1px solid rgba(224, 213, 165, 0.6);
+        }
+
+        .hamburger-panel.open {
+            left: 0;
+        }
+
+        .hamburger-panel .close-btn {
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: #1e3a8a;
+            background: none;
+            border: none;
+            display: block;
+            margin-bottom: 1.2rem;
+            text-align: right;
+            width: 100%;
+        }
+
+        .hamburger-panel .menu-item {
+            display: block;
+            padding: 0.8rem 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e3a8a;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(224, 213, 165, 0.4);
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .hamburger-panel .menu-item:hover {
+            background: rgba(30, 58, 138, 0.06);
+        }
+
+        /* Alt menü */
+        .submenu {
+            display: none;
+            padding-left: 1.2rem;
+        }
+
+        .submenu.open {
+            display: block;
+        }
+
+        .submenu .menu-item {
+            font-weight: 400;
+            font-size: 1rem;
+            padding: 0.6rem 0.5rem;
+            color: #2c3e4e;
+            border-bottom: 1px solid rgba(224, 213, 165, 0.3);
+        }
+
+        .has-submenu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .has-submenu .arrow {
+            font-size: 0.9rem;
+            transition: transform 0.2s;
+        }
+
+        .has-submenu .arrow.open {
+            transform: rotate(90deg);
+        }
+
+        /* Vaka No bölümü */
+        .vaka-section {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 2px solid rgba(224, 213, 165, 0.6);
+        }
+
+        .vaka-section .vaka-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-bottom: 0.6rem;
+        }
+
+        .vaka-section .vaka-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .vaka-section input {
+            flex: 1;
+            padding: 0.6rem 0.8rem;
+            font-size: 1rem;
+            border: 1px solid #c0b5a0;
+            border-radius: 12px;
+            background: white;
+            outline: none;
+            color: #1f2f3a;
+            min-width: 0;
+        }
+
+        .vaka-section input:focus {
+            border-color: #1e3a8a;
+            box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.15);
+        }
+
+        .vaka-section button {
+            padding: 0.6rem 1.2rem;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+
+        .vaka-section button:active {
+            background: #152d6b;
+        }
+
+        /* Arka plan karartma */
+        .hamburger-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 998;
+            display: none;
+        }
+
+        .hamburger-overlay.active {
+            display: block;
+        }
+
+        .sort-btn {
+            position: absolute;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .sort-btn:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .dashboard {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .app-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .app-btn {
+            background: rgba(255, 255, 245, 0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 28px;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(224, 213, 165, 0.5);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0,0,0,0.05);
+            color: #1f2f3a;
+            width: 100%;
+            text-align: left;
+        }
+
+        .app-btn:active {
+            transform: scale(0.98);
+        }
+
+        .app-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+            pointer-events: none;
+        }
+
+        .app-text {
+            flex: 1;
+            pointer-events: none;
+        }
+
+        .app-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #2c3e4e;
+        }
+
+        .app-desc {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            margin-top: 4px;
+            color: #4a5a6a;
+        }
+
+        .offline-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #dc3545;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 200;
+            display: none;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 1.5rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            border-radius: 35px;
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .modal-title {
+            text-align: center;
+            font-weight: 700;
+            color: #1e3a8a;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 1.5rem;
+            padding-right: 5px;
+        }
+
+        .modal-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .modal-list::-webkit-scrollbar-thumb {
+            background: #1e3a8a;
+            border-radius: 10px;
+        }
+
+        .modal-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fdfcf7;
+            padding: 0.8rem 1rem;
+            border-radius: 16px;
+            border: 1px solid #e8dfc8;
+        }
+
+        .modal-item .item-text {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #2c3e4e;
+        }
+
+        .modal-item .item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-item .item-actions button {
+            background: #f0ede4;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e3a8a;
+        }
+
+        .modal-item .item-actions button:active {
+            transform: scale(0.9);
+            background: #d6cebd;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 28px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .modal-buttons button:active {
+            transform: scale(0.95);
+        }
+
+        .btn-save {
+            background: #1e3a8a;
+            color: white;
+        }
+        .btn-cancel {
+            background: #fdfcf7;
+            color: #b91c1c;
+            border: 1px solid #e0d5bd;
+        }
+
+        .calc-view {
+            display: none;
+            width: 100%;
+            max-width: 480px;
+            margin: 2rem auto;
+            background: #ffffff;
+            border-radius: 35px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0d5bd;
+            padding: 1.5rem;
+        }
+        .calc-view.active { display: block; }
+
+        .calc-header { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            margin-bottom: 1rem; 
+        }
+        .calc-header h1 { 
+            text-align: center; 
+            color: #1e3a8a; 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            flex: 1; 
+        }
+        .home-btn {
+            background: transparent; 
+            border: 1px solid #1e3a8a; 
+            color: #1e3a8a;
+            padding: 6px 14px; 
+            border-radius: 20px; 
+            font-weight: 600; 
+            font-size: 0.9rem; 
+            cursor: pointer;
+        }
+        .home-btn:active { transform: scale(0.95); background: #e5edff; }
+
+        .calc-display {
+            width: 100%; background: #fdfcf7; border-radius: 20px; padding: 1.5rem 1.2rem;
+            margin-bottom: 1.5rem; text-align: right; font-size: 3.2rem; font-weight: 700;
+            color: #1e3a8a; min-height: 100px; display: flex; align-items: center; justify-content: flex-end;
+            border: 1px solid #e8dfc8; overflow: hidden; white-space: nowrap;
+        }
+        .calc-keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; }
+        .calc-btn {
+            border: none; border-radius: 18px; padding: 1.2rem 0; font-size: 1.8rem; font-weight: 600;
+            cursor: pointer; background: #fdfcf7; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04); color: #2c3e4e;
+        }
+        .calc-btn:active { transform: scale(0.94); background: #f0ede4; }
+        .calc-btn-func { color: #b91c1c; font-size: 1.6rem; }
+        .calc-btn-operator { background: #ffffff; border: 1px solid #1e3a8a; color: #1e3a8a; font-size: 2rem; }
+        .calc-btn-operator:active { background: #e5edff; }
+        .calc-btn-equals { background: #1e3a8a; color: white; font-size: 2.2rem; }
+        .calc-btn-equals:active { background: #152a61; transform: scale(0.94); }
+        .calc-btn-zero { grid-column: span 2; }
+
+        .tool-view {
+            display: none;
+            width: 100%;
+            max-width: 480px;
+            margin: 2rem auto;
+            background: #ffffff;
+            border-radius: 35px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0d5bd;
+            padding: 1.5rem 1.2rem;
+        }
+        .tool-view.active { display: block; }
+
+        .tool-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+        .tool-header h1 { text-align: center; color: #1e3a8a; font-size: 1.6rem; font-weight: 700; flex: 1; }
+        
+        .value-box-container { display: flex; align-items: center; gap: 10px; background: #fdfcf7; border: 1px solid #e8dfc8; border-radius: 16px; padding: 0.5rem 1rem; cursor: pointer; }
+        .value-box-container:active { transform: scale(0.95); background: #f0ede4; }
+        .value-box-container span { font-weight: 700; color: #2c3e4e; font-size: 0.95rem; }
+        .value-box-container .val { color: #1e3a8a; font-size: 1.1rem; font-weight: 600; margin-left: auto; }
+
+        .time-diff-section { background: #fdfcf7; border: 1px solid #e8dfc8; border-radius: 18px; padding: 1rem 0.8rem; margin-bottom: 1.2rem; }
+        .time-diff-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .time-diff-row .value-box-container { flex: 1; min-width: 80px; }
+        .time-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 0.8rem; }
+        .time-btn { flex: 1; padding: 0.6rem; border: none; border-radius: 20px; font-weight: 700; font-size: 0.95rem; cursor: pointer; background: #f0ede4; color: #2c3e4e; }
+        .time-btn.active { background-color: #b91c1c; color: white; transform: scale(0.96); }
+        .time-diff-result { margin-top: 0.8rem; text-align: center; font-size: 1.15rem; font-weight: 700; color: #1e3a8a; background: #ffffff; border-radius: 12px; padding: 0.8rem; border: 1px solid #e0d5bd; }
+        #tool-sonuc { margin-bottom: 1.2rem; padding: 1rem; background: #fdfcf7; border-radius: 16px; border: 1px solid #e0d5bd; font-weight: 700; font-size: 1.8rem; text-align: center; color: #1e3a8a; min-height: 70px; display: flex; align-items: center; justify-content: center; }
+        .row-group { display: flex; gap: 10px; margin-bottom: 12px; }
+        .row-group.single { justify-content: center; }
+        .row-group .value-box-container { flex: 1; min-width: 80px; }
+        .row-group.single .value-box-container { flex: 0 1 auto; min-width: 150px; justify-content: center; }
+
+        .modal-overlay-sel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 1.5rem;
+        }
+        .modal-overlay-sel.active { display: flex; }
+        .modal-content-sel {
+            background: #ffffff;
+            border-radius: 35px;
+            padding: 1.5rem;
+            max-width: 450px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .modal-title-sel { text-align: center; font-weight: 700; color: #1e3a8a; font-size: 1.2rem; margin-bottom: 1.2rem; }
+        .modal-grid-sel { display: grid; gap: 10px; }
+        .modal-btn-sel { padding: 1rem 0; border-radius: 16px; border: 1px solid #e8dfc8; background: #fdfcf7; font-size: 1.4rem; font-weight: 600; color: #1e3a8a; cursor: pointer; text-align: center; }
+        .modal-btn-sel.selected { background: #1e3a8a; color: white; border-color: #1e3a8a; }
+        .modal-special-input-sel { margin-top: 15px; display: none; gap: 10px; align-items: center; justify-content: center; }
+        .modal-special-input-sel.active { display: flex; }
+        .modal-special-input-sel input { padding: 0.8rem; border-radius: 12px; border: 2px solid #1e3a8a; font-size: 1.2rem; width: 100px; text-align: center; outline: none; background: #fdfcf7; }
+        .modal-special-input-sel button { padding: 0.8rem 1.5rem; background: #1e3a8a; color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; }
+
+        @media (max-width: 600px) {
+            .sticky-banner { padding: 1rem 0; }
+            .title-area h1 { font-size: 1.5rem; }
+            .title-area p { font-size: 0.7rem; }
+            .hamburger { left: 0.8rem; font-size: 1.6rem; }
+            .hamburger-panel { width: 220px; left: -240px; padding: 1.5rem 1rem 1rem 1rem; }
+            .sort-btn { right: 15px; padding: 6px 12px; font-size: 0.8rem; }
+            .dashboard { margin: 1.5rem auto; padding: 0 1rem; }
+            .app-btn { padding: 1rem 1.2rem; }
+            .app-name { font-size: 1rem; }
+            .app-icon { font-size: 1.6rem; }
+            .offline-toast { font-size: 10px; bottom: 15px; padding: 6px 12px; }
+            .modal-content { padding: 1.5rem 1rem; }
+            .calc-display { font-size: 2.8rem; padding: 1.2rem 1rem; min-height: 80px; }
+            .calc-btn { padding: 1rem 0; font-size: 1.6rem; border-radius: 15px; }
+            .calc-btn-operator { font-size: 1.8rem; }
+            .calc-btn-equals { font-size: 2rem; }
+            .calc-keys { gap: 0.6rem; }
+            .tool-view { padding: 1rem 0.8rem; }
+            .value-box-container span { font-size: 0.85rem; }
+            .value-box-container .val { font-size: 1rem; }
+            #tool-sonuc { font-size: 1.6rem; padding: 0.8rem; min-height: 60px; }
+            .modal-content-sel { padding: 1.2rem; }
+            .modal-btn-sel { font-size: 1.2rem; padding: 0.8rem 0; }
+            .tool-header h1 { font-size: 1.4rem; }
+            .home-btn { font-size: 0.7rem; padding: 4px 10px; }
+            .vaka-section input { font-size: 0.9rem; padding: 0.5rem 0.7rem; }
+            .vaka-section button { font-size: 0.9rem; padding: 0.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. ORİJİNAL ANA MENÜ -->
+    <div id="main-view">
+        <div class="sticky-banner">
+            <div class="banner-content">
+                <!-- Hamburger ikonu -->
+                <button class="hamburger" id="hamburgerBtn" aria-label="Menü">&#9776;</button>
+                <div class="title-area">
+                    <h1>EDEL</h1>
+                    <p>ÜRETİM ARAÇLARI</p>
+                </div>
+                <button class="sort-btn" onclick="openSortModal()">⚙️ SIRALAMA</button>
+            </div>
+        </div>
+
+        <!-- Hamburger panel -->
+        <div class="hamburger-overlay" id="hamburgerOverlay"></div>
+        <div class="hamburger-panel" id="hamburgerPanel">
+            <button class="close-btn" id="hamburgerCloseBtn">&#10005;</button>
+
+            <!-- Giriş -->
+            <a class="menu-item" onclick="openExternal('https://uys.edelkrone.com/Time/Home/Code?timeEvent=Shift&start=True')">🔐 Giriş</a>
+
+            <!-- Bordro -->
+            <a class="menu-item" onclick="openExternal('https://uys.edelkrone.com/HumanResources/Payroll')">📄 Bordro</a>
+
+            <!-- Atamalar (alt menülü) -->
+            <div class="menu-item has-submenu" id="atamalarParent">
+                <span>📋 Atamalar</span>
+                <span class="arrow" id="atamalarArrow">&#9658;</span>
+            </div>
+            <div class="submenu" id="atamalarSubmenu">
+                <a class="menu-item" onclick="openExternal('https://uys.edelkrone.com/Manufacturing/Workbenches/Assignments')">👤 Operatör</a>
+                <a class="menu-item" onclick="openExternal('https://uys.edelkrone.com/Manufacturing/Workbenches/TunerAssignments')">🔧 Ayarcı</a>
+            </div>
+
+            <!-- Vaka No bölümü -->
+            <div class="vaka-section">
+                <div class="vaka-title">📁 VAKA NO</div>
+                <div class="vaka-row">
+                    <input id="RecordId" type="number" inputmode="numeric" placeholder="Vaka No girin" />
+                    <button onclick="goToVaka()">Git</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="app-buttons" id="appButtons">
+                <!-- GİRİŞ BUTONU KALDIRILDI -->
+                <button class="app-btn" onclick="goTo('https://uys.edelkrone.com/Manufacturing/Workbenches/Assignments')">
+                    <div class="app-icon">📋</div>
+                    <div class="app-text">
+                        <div class="app-name">OPERATÖR ATAMALARI</div>
+                        <div class="app-desc"> </div>
+                    </div>
+                </button>
+                <button class="app-btn" onclick="goTo('https://uys.edelkrone.com/Manufacturing/ProductionRecords/SelectBench')">
+                    <div class="app-icon">📂</div>
+                    <div class="app-text">
+                        <div class="app-name">PARTİ SONU</div>
+                        <div class="app-desc"> </div>
+                    </div>
+                </button>
+                <button class="app-btn" onclick="goTo('https://uys.edelkrone.com/Manufacturing/ProductionBatches/List')">
+                    <div class="app-icon">⏳</div>
+                    <div class="app-text">
+                        <div class="app-name">AKTİF PARTİLER</div>
+                        <div class="app-desc"> </div>
+                    </div>
+                </button>
+                <button class="app-btn" onclick="goTo('https://uys.edelkrone.com/Manufacturing/Workbenches/History')">
+                    <div class="app-icon">📊</div>
+                    <div class="app-text">
+                        <div class="app-name">TEZGAH HAREKETLERİ</div>
+                        <div class="app-desc"> </div>
+                    </div>
+                </button>
+                <!-- HESAPLAMA BUTONU -->
+                <button class="app-btn" onclick="openCalculator()">
+                    <div class="app-icon">🧮</div>
+                    <div class="app-text">
+                        <div class="app-name">HESAP MAKİNASI</div>
+                        <div class="app-desc">Basit Hesap Makinası</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. HESAP MAKİNESİ -->
+    <div class="calc-view" id="calculator-view">
+        <div class="calc-header">
+            <h1>Hesap Makinesi</h1>
+            <button class="home-btn" onclick="goHome()">🏠 Ana Menü</button>
+        </div>
+        <div class="calc-display" id="calcDisplay">0</div>
+        <div class="calc-keys">
+            <button class="calc-btn calc-btn-func" onclick="clearCalc()">AC</button>
+            <button class="calc-btn calc-btn-func" onclick="deleteLast()">⌫</button>
+            <button class="calc-btn calc-btn-func" onclick="toggleSign()">±</button>
+            <button class="calc-btn calc-btn-operator" onclick="appendOperator('÷')">÷</button>
+            <button class="calc-btn" onclick="appendNumber('7')">7</button>
+            <button class="calc-btn" onclick="appendNumber('8')">8</button>
+            <button class="calc-btn" onclick="appendNumber('9')">9</button>
+            <button class="calc-btn calc-btn-operator" onclick="appendOperator('×')">×</button>
+            <button class="calc-btn" onclick="appendNumber('4')">4</button>
+            <button class="calc-btn" onclick="appendNumber('5')">5</button>
+            <button class="calc-btn" onclick="appendNumber('6')">6</button>
+            <button class="calc-btn calc-btn-operator" onclick="appendOperator('-')">-</button>
+            <button class="calc-btn" onclick="appendNumber('1')">1</button>
+            <button class="calc-btn" onclick="appendNumber('2')">2</button>
+            <button class="calc-btn" onclick="appendNumber('3')">3</button>
+            <button class="calc-btn calc-btn-operator" onclick="appendOperator('+')">+</button>
+            <button class="calc-btn calc-btn-zero" onclick="appendNumber('0')">0</button>
+            <button class="calc-btn" onclick="appendNumber('.')">.</button>
+            <button class="calc-btn calc-btn-equals" onclick="calculateMain()">=</button>
+        </div>
+    </div>
+
+    <!-- 3. ÖZEL HESAPLAMA ARACI -->
+    <div class="tool-view" id="tool-view">
+        <div class="tool-header">
+            <h1>Hesaplama Aracı</h1>
+            <button class="home-btn" onclick="goHome()">🏠 Ana Menü</button>
+        </div>
+        <div class="time-diff-section">
+            <div class="time-diff-row">
+                <div class="value-box-container" onclick="openSelectModal('baslangicSaat', 'Başlangıç Saati', 0, 23, 4)">
+                    <span>SAAT:</span><span class="val" id="display-baslangicSaat">00:00</span>
+                </div>
+                <div class="value-box-container" onclick="openSelectModal('baslangicDakika', 'Başlangıç Dakikası', 0, 59, 6)">
+                    <span>DAKİKA:</span><span class="val" id="display-baslangicDakika">00</span>
+                </div>
+            </div>
+            <div class="time-buttons">
+                <button class="time-btn" id="btnGeri" onclick="setMode('onceki')">Geçen Süre</button>
+                <button class="time-btn" id="btnIleri" onclick="setMode('sonraki')">Kalan Süre</button>
+            </div>
+            <div class="time-diff-result" id="elapsedTimeDisplay">00 saat 00 dakika</div>
+        </div>
+        <div id="tool-sonuc">0</div>
+        <div>
+            <div class="row-group">
+                <div class="value-box-container" onclick="openSelectModal('saat', 'Çalışma Saati', 0, 12, 4)">
+                    <span>Çalışma Saati</span><span class="val" id="display-saat">0</span>
+                </div>
+                <div class="value-box-container" onclick="openSelectModal('dakika', 'Çalışma Dakikası', 0, 59, 6)">
+                    <span>Çalışma Dk</span><span class="val" id="display-dakika">0</span>
+                </div>
+            </div>
+            <div class="row-group single">
+                <div class="value-box-container" onclick="openSelectModal('molaDakika', 'Mola Dakikası', -1, -1, -1)">
+                    <span>Mola Dk</span><span class="val" id="display-molaDakika">0</span>
+                </div>
+            </div>
+            <div class="row-group">
+                <div class="value-box-container" onclick="openSelectModal('parcaDakika', 'Parça Dakikası', 0, 59, 6)">
+                    <span>Parça Dk</span><span class="val" id="display-parcaDakika">0</span>
+                </div>
+                <div class="value-box-container" onclick="openSelectModal('parcaSaniye', 'Parça Saniyesi', 0, 59, 6)">
+                    <span>Parça Sn</span><span class="val" id="display-parcaSaniye">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIRALAMA MODALI -->
+    <div class="modal-overlay" id="sortModal">
+        <div class="modal-content">
+            <div class="modal-title">ANA EKRAN BUTONLARI</div>
+            <div class="modal-list" id="sortList"></div>
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeSortModal(false)">İptal</button>
+                <button class="btn-save" onclick="saveSortOrder()">Kaydet</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇİM MODALI -->
+    <div class="modal-overlay-sel" id="selectModalOverlay" onclick="closeSelectModal(event)">
+        <div class="modal-content-sel" onclick="event.stopPropagation()">
+            <div class="modal-title-sel" id="selectModalTitle">Seçim Yapın</div>
+            <div class="modal-grid-sel" id="selectModalGrid"></div>
+            <div class="modal-special-input-sel" id="selectModalSpecialInput">
+                <input type="number" id="selectModalCustomVal" placeholder="Değer girin" min="0">
+                <button onclick="confirmCustomMola()">Tamam</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="offlineToast" class="offline-toast">📶 İnternet bağlantısı yok</div>
+
+    <script>
+        // ==========================================
+        // 1. ORİJİNAL ANA MENÜ FONKSİYONLARI
+        // ==========================================
+        function goTo(url) {
+            if (url && url !== '#') {
+                window.location.href = url;
+            } else {
+                alert('Bu buton henüz ayarlanmadı.');
+            }
+        }
+
+        function openExternal(url) {
+            window.open(url, '_blank');
+        }
+
+        let tempSortItems = [];
+
+        function openSortModal() {
+            const buttons = document.querySelectorAll('.app-btn');
+            const listContainer = document.getElementById('sortList');
+            listContainer.innerHTML = '';
+            tempSortItems = [];
+            
+            buttons.forEach(btn => {
+                const name = btn.querySelector('.app-name').innerText;
+                const icon = btn.querySelector('.app-icon').innerText;
+                const desc = btn.querySelector('.app-desc').innerText;
+                
+                // Butonun onclick özelliğini analiz et
+                const onclickAttr = btn.getAttribute('onclick');
+                let type = 'url';
+                let url = '#';
+                let funcName = '';
+                
+                if (onclickAttr) {
+                    // Eğer goTo('...') varsa
+                    const goToMatch = onclickAttr.match(/goTo\('([^']*)'\)/);
+                    if (goToMatch) {
+                        type = 'url';
+                        url = goToMatch[1];
+                    } 
+                    // Eğer openCalculator() gibi direkt fonksiyon çağrısıysa
+                    else {
+                        type = 'function';
+                        funcName = onclickAttr.replace(/\(\)/g, '').trim(); // openCalculator
+                    }
+                }
+                
+                tempSortItems.push({ name, icon, desc, url, type, funcName });
+            });
+            
+            renderSortList();
+            document.getElementById('sortModal').classList.add('active');
+        }
+
+        function renderSortList() {
+            const listContainer = document.getElementById('sortList');
+            listContainer.innerHTML = '';
+            tempSortItems.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'modal-item';
+                div.innerHTML = `
+                    <span class="item-text">${item.icon} ${item.name}</span>
+                    <div class="item-actions">
+                        <button onclick="moveItem(${index}, -1)" ${index === 0 ? 'disabled style="opacity:0.3"' : ''}>⬆️</button>
+                        <button onclick="moveItem(${index}, 1)" ${index === tempSortItems.length - 1 ? 'disabled style="opacity:0.3"' : ''}>⬇️</button>
+                    </div>
+                `;
+                listContainer.appendChild(div);
+            });
+        }
+
+        function moveItem(index, direction) {
+            const newIndex = index + direction;
+            if (newIndex < 0 || newIndex >= tempSortItems.length) return;
+            const temp = tempSortItems[index];
+            tempSortItems[index] = tempSortItems[newIndex];
+            tempSortItems[newIndex] = temp;
+            renderSortList();
+        }
+
+        function saveSortOrder() {
+            const container = document.getElementById('appButtons');
+            container.innerHTML = '';
+            
+            tempSortItems.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = 'app-btn';
+                
+                // Tipine göre onclick ata
+                if (item.type === 'url') {
+                    btn.setAttribute('onclick', `goTo('${item.url}')`);
+                } else if (item.type === 'function') {
+                    btn.setAttribute('onclick', `${item.funcName}()`);
+                }
+                
+                btn.innerHTML = `
+                    <div class="app-icon">${item.icon}</div>
+                    <div class="app-text">
+                        <div class="app-name">${item.name}</div>
+                        <div class="app-desc">${item.desc}</div>
+                    </div>
+                `;
+                container.appendChild(btn);
+            });
+
+            // Sıralamayı localStorage'a kaydet (tüm veriyi sakla)
+            const fullData = tempSortItems.map(item => ({
+                name: item.name,
+                icon: item.icon,
+                desc: item.desc,
+                url: item.url,
+                type: item.type,
+                funcName: item.funcName
+            }));
+            localStorage.setItem('edelFullButtonData', JSON.stringify(fullData));
+            
+            closeSortModal(true);
+        }
+
+        function closeSortModal(saved) {
+            document.getElementById('sortModal').classList.remove('active');
+        }
+
+        function loadSavedOrder() {
+            const savedData = localStorage.getItem('edelFullButtonData');
+            if (!savedData) return;
+            
+            const data = JSON.parse(savedData);
+            const container = document.getElementById('appButtons');
+            container.innerHTML = '';
+            
+            data.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = 'app-btn';
+                
+                // Tipine göre onclick ata
+                if (item.type === 'url') {
+                    btn.setAttribute('onclick', `goTo('${item.url}')`);
+                } else if (item.type === 'function') {
+                    btn.setAttribute('onclick', `${item.funcName}()`);
+                }
+                
+                btn.innerHTML = `
+                    <div class="app-icon">${item.icon}</div>
+                    <div class="app-text">
+                        <div class="app-name">${item.name}</div>
+                        <div class="app-desc">${item.desc}</div>
+                    </div>
+                `;
+                container.appendChild(btn);
+            });
+        }
+        window.addEventListener('DOMContentLoaded', loadSavedOrder);
+
+        // ==========================================
+        // 2. EKRAN GEÇİŞİ
+        // ==========================================
+        function goHome() {
+            document.getElementById('main-view').style.display = 'block';
+            document.getElementById('calculator-view').classList.remove('active');
+            document.getElementById('tool-view').classList.remove('active');
+            clearCalc();
+        }
+
+        function openCalculator() {
+            document.getElementById('main-view').style.display = 'none';
+            document.getElementById('calculator-view').classList.add('active');
+            document.getElementById('tool-view').classList.remove('active');
+            clearCalc();
+        }
+
+        function switchView(viewId) {
+            document.getElementById('calculator-view').classList.remove('active');
+            document.getElementById('tool-view').classList.remove('active');
+            document.getElementById(viewId).classList.add('active');
+            if (viewId === 'tool-view') {
+                calculateTimeDifference();
+                calculateAdet();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // ==========================================
+        // 3. HESAP MAKİNESİ MANTIĞI
+        // ==========================================
+        const calcDisplay = document.getElementById('calcDisplay');
+        let currentInput = '0';
+        let previousInput = '';
+        let operator = null;
+        let shouldResetScreen = false;
+
+        function updateCalcDisplay() { calcDisplay.innerText = currentInput; }
+
+        function appendNumber(number) {
+            if (currentInput === '0' || shouldResetScreen) {
+                currentInput = (number === '.') ? '0.' : number;
+                shouldResetScreen = false;
+            } else {
+                if (number === '.' && currentInput.includes('.')) return;
+                currentInput += number;
+            }
+            updateCalcDisplay();
+        }
+
+        function appendOperator(op) {
+            if (operator !== null && !shouldResetScreen) calculateMain();
+            previousInput = currentInput;
+            operator = op;
+            shouldResetScreen = true;
+        }
+
+        function calculateMain() {
+            if (currentInput === '1' && operator === null && previousInput === '') {
+                switchView('tool-view');
+                return;
+            }
+            if (operator === null || shouldResetScreen) return;
+            let prev = parseFloat(previousInput);
+            let curr = parseFloat(currentInput);
+            let result = 0;
+            switch(operator) {
+                case '+': result = prev + curr; break;
+                case '-': result = prev - curr; break;
+                case '×': result = prev * curr; break;
+                case '÷': 
+                    if (curr === 0) {
+                        currentInput = 'Hata'; updateCalcDisplay();
+                        setTimeout(() => clearCalc(), 1500); return;
+                    }
+                    result = prev / curr; break;
+                default: return;
+            }
+            currentInput = Math.round(result * 100000000) / 100000000;
+            currentInput = currentInput.toString();
+            operator = null; previousInput = ''; shouldResetScreen = true;
+            updateCalcDisplay();
+        }
+
+        function clearCalc() {
+            currentInput = '0'; previousInput = ''; operator = null; shouldResetScreen = false;
+            updateCalcDisplay();
+        }
+
+        function deleteLast() {
+            if (shouldResetScreen) return;
+            if (currentInput.length === 1 || (currentInput.length === 2 && currentInput.startsWith('-'))) {
+                currentInput = '0';
+            } else {
+                currentInput = currentInput.slice(0, -1);
+            }
+            updateCalcDisplay();
+        }
+
+        function toggleSign() {
+            if (currentInput === '0') return;
+            currentInput = currentInput.startsWith('-') ? currentInput.slice(1) : '-' + currentInput;
+            updateCalcDisplay();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key >= '0' && e.key <= '9' || e.key === '.') appendNumber(e.key);
+            else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
+                let op = e.key; if (op === '*') op = '×'; if (op === '/') op = '÷';
+                appendOperator(op);
+            } else if (e.key === 'Enter' || e.key === '=') calculateMain();
+            else if (e.key === 'Backspace') deleteLast();
+            else if (e.key === 'Escape' || e.key === 'c' || e.key === 'C') clearCalc();
+        });
+
+        // ==========================================
+        // 4. ÖZEL HESAPLAMA ARACI MANTIĞI
+        // ==========================================
+        let currentMode = 'onceki'; 
+        let currentSelectId = '';
+        const toolValues = { baslangicSaat: 0, baslangicDakika: 0, saat: 0, dakika: 0, molaDakika: 0, parcaDakika: 0, parcaSaniye: 0 };
+
+        function openSelectModal(id, title, min, max, perRow) {
+            currentSelectId = id;
+            document.getElementById('selectModalTitle').innerText = title;
+            document.getElementById('selectModalSpecialInput').classList.remove('active');
+            const grid = document.getElementById('selectModalGrid');
+            grid.innerHTML = '';
+            grid.style.gridTemplateColumns = '';
+
+            if(id === 'molaDakika') {
+                const items = [0, 5, 10, 30];
+                items.forEach(val => {
+                    let btn = document.createElement('div');
+                    btn.className = 'modal-btn-sel' + (toolValues[id] === val ? ' selected' : '');
+                    btn.innerText = val;
+                    btn.onclick = () => { selectValue(id, val); };
+                    grid.appendChild(btn);
+                });
+                let customBtn = document.createElement('div');
+                customBtn.className = 'modal-btn-sel';
+                customBtn.innerText = 'Özel';
+                customBtn.onclick = () => {
+                    document.getElementById('selectModalSpecialInput').classList.add('active');
+                };
+                grid.appendChild(customBtn);
+            } else {
+                grid.style.gridTemplateColumns = `repeat(${perRow}, 1fr)`;
+                for(let i = min; i <= max; i++) {
+                    let btn = document.createElement('div');
+                    btn.className = 'modal-btn-sel' + (toolValues[id] === i ? ' selected' : '');
+                    btn.innerText = i;
+                    btn.onclick = () => { selectValue(id, i); };
+                    grid.appendChild(btn);
+                }
+            }
+            document.getElementById('selectModalOverlay').classList.add('active');
+        }
+
+        function closeSelectModal(e) {
+            if(e.target === e.currentTarget) document.getElementById('selectModalOverlay').classList.remove('active');
+        }
+
+        function selectValue(id, val) {
+            toolValues[id] = val;
+            document.getElementById('display-' + id).innerText = val;
+            document.getElementById('selectModalOverlay').classList.remove('active');
+            if(id === 'baslangicSaat' || id === 'baslangicDakika') {
+                document.getElementById('display-baslangicSaat').innerText = String(toolValues.baslangicSaat).padStart(2, '0') + ':00';
+                document.getElementById('display-baslangicDakika').innerText = String(toolValues.baslangicDakika).padStart(2, '0');
+                calculateTimeDifference();
+            } else {
+                calculateAdet();
+            }
+        }
+
+        function confirmCustomMola() {
+            const input = document.getElementById('selectModalCustomVal');
+            let val = parseInt(input.value);
+            if(isNaN(val)) val = 0; if(val < 0) val = 0;
+            selectValue('molaDakika', val);
+            input.value = '';
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.getElementById('btnGeri').classList.remove('active');
+            document.getElementById('btnIleri').classList.remove('active');
+            if(mode === 'onceki') document.getElementById('btnGeri').classList.add('active');
+            else document.getElementById('btnIleri').classList.add('active');
+            calculateTimeDifference();
+        }
+
+        function calculateTimeDifference() {
+            const now = new Date();
+            let sHour = toolValues.baslangicSaat;
+            let sMin = toolValues.baslangicDakika;
+            let totalStart = (sHour * 60) + sMin;
+            let totalNow = (now.getHours() * 60) + now.getMinutes();
+            let diff = 0;
+            if (currentMode === 'onceki') {
+                if (totalStart > totalNow) totalNow += (24 * 60);
+                diff = totalNow - totalStart;
+            } else {
+                if (totalStart < totalNow) totalStart += (24 * 60);
+                diff = totalStart - totalNow;
+            }
+            if (diff < 0) diff = 0;
+            document.getElementById('elapsedTimeDisplay').innerText = 
+                String(Math.floor(diff / 60)).padStart(2, '0') + ' saat ' + String(diff % 60).padStart(2, '0') + ' dakika';
+        }
+
+        function calculateAdet() {
+            var saat = toolValues.saat, dakika = toolValues.dakika, molaDakika = toolValues.molaDakika;
+            var parcaDakika = toolValues.parcaDakika, parcaSaniye = toolValues.parcaSaniye;
+            var s1 = saat * 60, s2 = s1 + dakika, s3 = s2 * 60;
+            var m1 = molaDakika * 60, calSaat = s3 - m1;
+            var p1 = parcaDakika * 60, p2 = parcaSaniye + p1;
+            var istenenAdet = Math.floor(calSaat / p2);
+            document.getElementById("tool-sonuc").innerText = istenenAdet > 0 ? istenenAdet : 0;
+        }
+
+        // ==========================================
+        // 5. HAMBURGER MENÜ İŞLEVLERİ
+        // ==========================================
+        const panel = document.getElementById('hamburgerPanel');
+        const overlay = document.getElementById('hamburgerOverlay');
+        const openBtn = document.getElementById('hamburgerBtn');
+        const closeBtn = document.getElementById('hamburgerCloseBtn');
+
+        function openMenu() {
+            panel.classList.add('open');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            panel.classList.remove('open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        openBtn.addEventListener('click', openMenu);
+        closeBtn.addEventListener('click', closeMenu);
+        overlay.addEventListener('click', closeMenu);
+
+        // Alt menü (Atamalar) aç/kapa
+        const atamalarParent = document.getElementById('atamalarParent');
+        const atamalarSubmenu = document.getElementById('atamalarSubmenu');
+        const atamalarArrow = document.getElementById('atamalarArrow');
+
+        atamalarParent.addEventListener('click', function(e) {
+            e.stopPropagation();
+            atamalarSubmenu.classList.toggle('open');
+            atamalarArrow.classList.toggle('open');
+        });
+
+        // Vaka No git
+        function goToVaka() {
+            var id = document.getElementById('RecordId').value;
+            if (id && !isNaN(parseInt(id))) {
+                window.open('https://uys.edelkrone.com/Manufacturing/Quality/Details/' + id, '_blank');
+            } else {
+                alert('Lütfen geçerli bir numara girin.');
+            }
+        }
+
+        // Enter tuşu ile Vaka No gönderme
+        document.getElementById('RecordId').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                goToVaka();
+            }
+        });
+
+        // ==========================================
+        // 6. OFFİNE & SW (GÜNCELLENDİ)
+        // ==========================================
+        function showOfflineMessage() {
+            const toast = document.getElementById('offlineToast');
+            if (toast) {
+                toast.style.display = 'block';
+                setTimeout(() => { toast.style.display = 'none'; }, 3000);
+            }
+        }
+
+        window.addEventListener('online', () => { console.log('Çevrimiçi'); });
+        window.addEventListener('offline', () => { console.log('Çevrimdışı'); showOfflineMessage(); });
+
+        if (!navigator.onLine) { showOfflineMessage(); }
+
+        // Service Worker kaydı - GÜNCELLENDİ (Her yeni deployda eski cache'i temizler)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+            }).then(function() {
+                navigator.serviceWorker.register('/edeloper/sw.js', { scope: '/edeloper/' })
+                    .then(reg => { 
+                        console.log('✅ Service Worker kaydedildi:', reg.scope);
+                        // Yeni sürüm kontrolü için
+                        reg.update();
+                    })
+                    .catch(err => { console.log('❌ Service Worker hatası:', err); });
+            });
+        }
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            console.log('📱 PWA kurulumu mümkün');
+        });
+    </script>
+</body>
+</html>
